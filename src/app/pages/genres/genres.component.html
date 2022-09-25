@@ -1,0 +1,16 @@
+<div class="container">
+    <h1>Movie Genres</h1>
+    <div class="grid">
+        <div *ngFor="let genre of genres" class="col-6 md:col-3 lg:col-2">
+            <a class="genre-link" [routerLink]="'/movies/genres/' + genre.id" [queryParams]="{genre:genre.name}">{{genre.name}}</a>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <h1>TV Show Genres</h1>
+    <div class="grid">
+        <div *ngFor="let tv_genre of tv_genres" class="col-6 md:col-3 lg:col-2">
+            <a class="genre-link" [routerLink]="'/tv-shows/genres/' + tv_genre.id" [queryParams]="{tv_genre:tv_genre.name}">{{tv_genre.name}}</a>
+        </div>
+    </div>
+</div>

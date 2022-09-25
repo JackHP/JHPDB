@@ -1,0 +1,108 @@
+<ng-container *ngIf="tv_show">
+    <slider [tv_items]="[tv_show]" [isBanner]="true"></slider>
+    <p-tabView>
+        <p-tabPanel header="Overview">
+            <div class="grid">
+                <div class="col-12 md:col-3 lg:col-3">
+                    <img class="poster" [src]="imagesSizes.medium + tv_show.poster_path" [alt]="tv_show.name">
+                </div>
+                <div class="col-12 md:col-9 lg:col-9">
+                    <h2>Overview</h2>
+                    <p class="overview">{{tv_show.overview}}</p>
+                    <div class="stat">
+                        <div class="label col-5 md:col-4 lg:col-3">First Episode Date:</div>
+                        <div class="value col-6 md:col-8 lg:col-9">
+                            {{tv_show.first_air_date | date: 'dd MMM yyyy'}}
+                        </div>
+                    </div>
+                    <div class="stat">
+                        <div class="label col-5 md:col-4 lg:col-3">Last Episode Date:</div>
+                        <div class="value col-7 md:col-8 lg:col-9">
+                            {{tv_show.last_episode_to_air.air_date | date: 'dd MMM yyyy'}}
+                        </div>
+                    </div>
+                    <div class="stat">
+                        <div class="label col-5 md:col-4 lg:col-3">Language:</div>
+                        <div class="value col-7 md:col-8 lg:col-9">
+                            {{tv_show.original_language | uppercase}}
+                        </div>
+                    </div>
+                    <div class="stat">
+                        <div class="label col-5 md:col-4 lg:col-3">Seasons:</div>
+                        <div class="value col-7 md:col-8 lg:col-9">
+                            {{tv_show.number_of_seasons}}
+                        </div>
+                    </div>
+                    <div class="stat">
+                        <div class="label col-5 md:col-4 lg:col-3">Total Episodes:</div>
+                        <div class="value col-7 md:col-8 lg:col-9">
+                            {{tv_show.number_of_episodes}}
+                        </div>
+                    </div>
+                    <!-- <div class="stat">
+                        <div class="label col-5 md:col-4 lg:col-3">Homepage:</div>
+                        <div class="value col-7 md:col-8 lg:col-9">
+                            <a [href]="tv_show.homepage">{{tv_show.homepage}}</a>
+                        </div>
+                    </div> -->
+                    <div class="stat">
+                        <div class="label col-5 md:col-4 lg:col-3">Status:</div>
+                        <div class="value col-7 md:col-8 lg:col-9">
+                            {{tv_show.status}}
+                        </div>
+                    </div>
+                    <div class="stat">
+                        <div class="label col-5 md:col-4 lg:col-3">Genres:</div>
+                        <div class="value col-7 md:col-8 lg:col-9">
+                            <ng-container *ngFor="let genre of tv_show.genres;let last = last;">
+                                <span *ngIf="last; then thenBlock else elseBlock"></span>
+                                <ng-template #thenBlock><a class="value" [routerLink]="'/tv-shows/genres/' + genre.id"
+                                        [queryParams]="{tv_genre:genre.name}">{{genre.name}}</a></ng-template>
+                                <ng-template #elseBlock><a class="value" [routerLink]="'/tv-shows/genres/' + genre.id"
+                                        [queryParams]="{tv_genre:genre.name}">{{genre.name}}, </a></ng-template>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </p-tabPanel>
+        <p-tabPanel header="Videos">
+            <div class="grid">
+                <ng-container *ngFor="let video of tv_showVideos">
+                    <div class="col-12 md:col-4 lg:col-4">
+                        <video-embed [key]="video.key" [site]="video.site"></video-embed>
+                    </div>
+                </ng-container>
+            </div>
+        </p-tabPanel>
+        <p-tabPanel header="Photos">
+            <div class="grid">
+                <ng-container *ngFor="let image of tv_showImages?.backdrops">
+                    <div class="col-12 md:col-4 lg:col-4">
+                        <p-image [src]="imagesSizes.large + image.file_path" alt="Image" width="100%" [preview]="false">
+                        </p-image>
+                    </div>
+                </ng-container>
+            </div>
+        </p-tabPanel>
+    </p-tabView>
+
+    <ng-container [ngSwitch]="actorList.length">
+        <h3 *ngSwitchCase="0">No Actors Found</h3>
+        <ng-container *ngSwitchDefault>
+            <p-carousel *ngIf="tv_showCredits" [value]="tv_showCredits.cast" [numVisible]="5" [numScroll]="5"
+                [responsiveOptions]="responsiveOptions">
+                <ng-template let-actor pTemplate="item">
+                    <div class="actor">
+                        <img [src]="imagesSizes.medium + actor.profile_path" alt="">
+                        <span>
+                            <a
+                                [href]="'https://www.imdb.com/name/'+actorList[tv_showCredits.cast.indexOf(actor)].imdb_id">{{actor.name}}</a>
+                        </span>
+                        <span class="character_name">{{actor.character}}</span>
+                    </div>
+                </ng-template>
+            </p-carousel>
+        </ng-container>
+    </ng-container>
+</ng-container>

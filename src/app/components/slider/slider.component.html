@@ -1,0 +1,62 @@
+<div class="slider">
+    <ng-container *ngIf="items">
+        <ng-container *ngFor="let item of items; let i = index">
+            <div class="slide" *ngIf="i == currentSlideIndex" @slideFade>
+                <div class="slide-bg">
+                    <img class="slide-bg-image" [src]="'https://image.tmdb.org/t/p/original/' + item.backdrop_path"
+                        alt="" />
+                </div>
+                <div class="slide-pane">
+                    <!-- Add ngif for this link to not appear when on the movie page itself -->
+                    <a [routerLink]="'/movie/'+item.id">
+                        <h2 class="name">{{ item.title }}</h2>
+                    </a>
+                    <div class="meta">
+                        <div class="info">
+                            <span class="rating">
+                                <span class="app-icon">star</span><span class="rating-value">{{ item.vote_average
+                                    }}</span><span>/10</span>
+                            </span>
+                            <span>{{ item.vote_count }}</span>
+                            <span>{{ item.release_date | date: 'yyyy' }}</span>
+                        </div>
+                    </div>
+                    <div class="desc mt-6">
+                        <p-scrollPanel [style]="{width: '100%', height: '200px'}">
+                            {{ item.overview }}
+                        </p-scrollPanel>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </ng-container>
+    <ng-container *ngIf="tv_items">
+        <ng-container *ngFor="let item of tv_items; let i = index">
+            <div class="slide" *ngIf="i == currentSlideIndex" @slideFade>
+                <!-- <div class="slide"> -->
+                <div class="slide-bg">
+                    <img class="slide-bg-image" [src]="'https://image.tmdb.org/t/p/original/' + item.backdrop_path"
+                        alt="" />
+                </div>
+                <div class="slide-pane">
+                    <h2 class="name">{{ item.name }}</h2>
+                    <div class="meta">
+                        <div class="info">
+                            <span class="rating">
+                                <span class="app-icon">star</span><span class="rating-value">{{ item.vote_average
+                                    }}</span><span>/10</span>
+                            </span>
+                            <span>{{ item.vote_count }}</span>
+                            <span>{{ item.first_air_date | date: 'yyyy' }}</span>
+                        </div>
+                    </div>
+                    <div class="desc mt-6">
+                        <p-scrollPanel [style]="{width: '100%', height: '200px'}">
+                            {{ item.overview }}
+                        </p-scrollPanel>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </ng-container>
+</div>
