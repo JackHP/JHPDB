@@ -1,0 +1,45 @@
+@import '../../../styles/colors';
+
+header {
+  .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+    height: 65px;
+    background-color: $bgColorLight;
+    margin: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 10px;
+
+    ::ng-deep .p-menubar-mobile-active {
+      ::ng-deep .p-menubar-root-list {
+        top: 36px;
+        right: -16px;
+        width: 128px;
+        left: unset;
+      }
+    }
+
+    &-logo {
+      display: block;
+
+      img {
+        width: 85px;
+        padding-top: 3px;
+      }
+    }
+
+    // &-links {
+    //   display: block;
+    //   padding: 0;
+    //   margin: 0;
+    //   list-style: none;
+
+    //   li {
+    //     display: inline;
+    //     margin-right: 15px;
+    //   }
+    // }
+  }
+}
